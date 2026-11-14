@@ -1,0 +1,16 @@
+# Lokale WordPress-Konfiguration und Exportdateien niemals veröffentlichen
+wp-config.php
+.env
+.env.*
+!.env.example
+*.sql
+*.sql.gz
+*.log
+*.bak
+*.backup
+.DS_Store
+.idea/
+.vscode/
+node_modules/
+vendor/
+*.zip
