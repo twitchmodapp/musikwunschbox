@@ -35,9 +35,13 @@ Die Verfügbarkeit einzelner Funktionen hängt von der Verbindung zur zentralen 
 
 Die Anleitung wird vor Veröffentlichung anhand einer frischen WordPress-Installation überprüft.
 
+## Lizenz
+
+Das WordPress-Plugin steht unter der **GNU General Public License, Version 2 oder jeder späteren Version (GPL-2.0-or-later)**. Der vollständige Lizenztext ist in [`LICENSE`](LICENSE) enthalten. Die Plugin-Metadaten und die `readme.txt` nennen dieselbe Lizenz.
+
 ## Veröffentlichung
 
-Der erste Release-Kandidat basiert auf dem vorhandenen WordPress-Client **0.6.8**. Vor einem öffentlichen Download sind noch ein Funktionstest mit einem unabhängigen Twitch-Konto, die Prüfung des Zentraldienstes, ein Sicherheitsreview und die Festlegung einer Quellcodelizenz erforderlich.
+Der erste Release-Kandidat basiert auf dem vorhandenen WordPress-Client **0.6.8**. Vor einem öffentlichen Download sind noch ein Funktionstest mit einem unabhängigen Twitch-Konto, die Prüfung des Zentraldienstes und ein Sicherheitsreview erforderlich.
 
 **Keine Zugangsdaten in GitHub hochladen:** keine Twitch-Secrets, Access- oder Refresh-Tokens, WordPress-Konfiguration, HMAC-Geheimnisse oder Datenbanken.
 
