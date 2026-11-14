@@ -4,6 +4,8 @@
  * Description: Musikwünsche per Twitch-Chat und Kanalpunkte auf der eigenen WordPress-Seite.
  * Version: 0.6.8
  * Requires PHP: 8.0
+ * License: GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 if(!defined('ABSPATH'))exit;
 class TM_Client {
