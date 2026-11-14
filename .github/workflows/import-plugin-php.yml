@@ -1,0 +1,31 @@
+name: Import WordPress plugin PHP source
+on:
+  push:
+    paths:
+      - '.bootstrap/php-source.gz.b64'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Restore original verified source
+        shell: bash
+        run: |
+          set -euo pipefail
+          base64 --decode .bootstrap/php-source.gz.b64 | gzip -d > twitch-musik-client/twitch-musik-client.php
+          echo '4531140e127e793ac6c4c43e90734ad973d2a8caf7f4330b524f9b282223310c  twitch-musik-client/twitch-musik-client.php' | sha256sum --check --status
+          php -l twitch-musik-client/twitch-musik-client.php
+      - name: Commit verified PHP file
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add twitch-musik-client/twitch-musik-client.php
+          git commit -m "Import original verified WordPress client PHP 0.6.8"
+          git push origin HEAD:main
