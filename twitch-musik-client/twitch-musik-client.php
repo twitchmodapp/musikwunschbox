@@ -116,7 +116,21 @@ return ob_get_clean();}
   set_transient('tmc_reward_result_'.get_current_user_id(),sanitize_text_field($msg),120);
   wp_safe_redirect(add_query_arg(['page'=>'tmc','tmc_reward_status'=>$ok?'ok':'error'],admin_url('admin.php')));exit;
  }
- static function connect(){if(!is_admin()||!isset($_POST['tmc_connect'])||!current_user_can('manage_options'))return;check_admin_referer('tmc_connect');$secret=get_option('tmc_secret');$r=wp_remote_post('https://musikwunsch.it-md-server.de/index.php?rest_route=/twitch-musik/v1/pair',['timeout'=>20,'headers'=>['Content-Type'=>'application/json'],'body'=>wp_json_encode(['site_url'=>home_url('/'),'push_secret'=>$secret])]);$d=is_wp_error($r)?[]:json_decode(wp_remote_retrieve_body($r),true);if(empty($d['authorization_url'])){wp_safe_redirect(add_query_arg('tmc_error',rawurlencode('Zentrale nicht erreichbar oder nicht eingerichtet'),admin_url('admin.php?page=tmc')));exit;}wp_redirect(esc_url_raw($d['authorization_url']));exit;}
+ static function connect(){if(!is_admin()||!isset($_POST['tmc_connect'])||!current_user_can('manage_options'))return;check_admin_referer('tmc_connect');$secret=get_option('tmc_secret');$r=wp_remote_post('https://musikwunsch.it-md-server.de/index.php?rest_route=/twitch-musik/v1/pair',['timeout'=>20,'headers'=>['Content-Type'=>'application/json'],'body'=>wp_json_encode(['site_url'=>home_url('/'),'push_secret'=>$secret])]);$d=is_wp_error($r)?[]:json_decode(wp_remote_retrieve_body($r),true);$authorization_url=is_string($d['authorization_url']??null)?$d['authorization_url']:'';
+  $target=wp_parse_url($authorization_url);
+  $host=is_array($target)?strtolower((string)($target['host']??'')):'';
+  $allowed_hosts=['id.twitch.tv','musikwunsch.it-md-server.de'];
+  // Die OAuth-URL stammt von der Zentrale: ausschließlich HTTPS-Ziele ohne Zugangsdaten/Port akzeptieren.
+  $valid=is_array($target)&&($target['scheme']??'')==='https'
+   &&in_array($host,$allowed_hosts,true)
+   &&!isset($target['user'])&&!isset($target['pass'])&&!isset($target['port'])
+   &&!isset($target['fragment']);
+  if(!$valid){
+   wp_safe_redirect(add_query_arg('tmc_error','OAuth-Weiterleitung ungueltig',admin_url('admin.php?page=tmc')));
+   exit;
+  }
+  wp_redirect(esc_url_raw($authorization_url));
+  exit;}
  static function routes(){register_rest_route(self::NS,'/proof',['methods'=>'GET','callback'=>[__CLASS__,'proof'],'permission_callback'=>'__return_true']);register_rest_route(self::NS,'/incoming',['methods'=>'POST','callback'=>[__CLASS__,'incoming'],'permission_callback'=>'__return_true']);register_rest_route(self::NS,'/songs',['methods'=>'GET','callback'=>[__CLASS__,'songs'],'permission_callback'=>'__return_true']);register_rest_route(self::NS,'/status',['methods'=>'GET','callback'=>[__CLASS__,'public_status'],'permission_callback'=>'__return_true']);}
  static function proof($r){$challenge=(string)$r->get_param('challenge');if(!preg_match('/^[a-f0-9]{40}$/',$challenge))return new WP_Error('challenge','Ungültig',['status'=>400]);return ['proof'=>hash_hmac('sha256',$challenge,get_option('tmc_secret'))];}
  static function incoming($r){self::cleanup_playlist();$ts=$r->get_header('x-tm-timestamp');$sig=$r->get_header('x-tm-signature');$body=$r->get_body();if(!$ts||abs(time()-intval($ts))>300||!$sig||!hash_equals(hash_hmac('sha256',$ts.'.'.$body,get_option('tmc_secret')),$sig))return new WP_Error('forbidden','Signatur ungültig',['status'=>403]);$j=json_decode($body,true);if(($j['type']??'')==='connected'){update_option('tmc_broadcaster',sanitize_text_field($j['broadcaster_name']??''));return ['ok'=>true];}$o=self::opts();$type=$j['type']??'';if(get_option('tmc_list_enabled','yes')==='no'){
