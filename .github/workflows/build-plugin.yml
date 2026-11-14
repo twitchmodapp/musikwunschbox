@@ -1,0 +1,51 @@
+name: WordPress-Plugin prüfen und ZIP erstellen
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Quellcode abrufen
+        uses: actions/checkout@v4
+
+      - name: PHP-Syntax prüfen
+        run: |
+          php -l twitch-musik-client/twitch-musik-client.php
+
+      - name: JavaScript-Syntax prüfen
+        run: |
+          node --check twitch-musik-client/admin.js
+          node --check twitch-musik-client/front.js
+
+      - name: Plugin-Struktur prüfen
+        run: |
+          set -eu
+          test -s twitch-musik-client/twitch-musik-client.php
+          test -s twitch-musik-client/admin.js
+          test -s twitch-musik-client/front.js
+          test -s twitch-musik-client/front.css
+          test -s twitch-musik-client/readme.txt
+          grep -Fq 'Version: 0.6.8' twitch-musik-client/twitch-musik-client.php
+
+      - name: Installierbare WordPress-ZIP erstellen
+        run: |
+          set -eu
+          mkdir -p dist
+          zip -q -r dist/twitch-musik-client-0.6.8.zip twitch-musik-client
+          unzip -t dist/twitch-musik-client-0.6.8.zip
+
+      - name: ZIP als Build-Artefakt bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: twitch-musik-client-0.6.8
+          path: dist/twitch-musik-client-0.6.8.zip
+          if-no-files-found: error
+          retention-days: 30
