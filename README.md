@@ -40,6 +40,12 @@ Die Anleitung wird vor Veröffentlichung anhand einer frischen WordPress-Install
 
 Das WordPress-Plugin steht unter der **GNU General Public License, Version 2 oder jeder späteren Version (GPL-2.0-or-later)**. Der vollständige Lizenztext ist in [`LICENSE`](LICENSE) enthalten. Die Plugin-Metadaten und die `readme.txt` nennen dieselbe Lizenz.
 
+## Veröffentlichung der aktuellen Version 0.7.10
+
+Die vorbereitete GitHub-Aktion **Hochgeladenes WordPress-Plugin übernehmen** übernimmt Quellcode und Release aus einer installierbaren ZIP. Dazu auf [uploads](https://github.com/twitchmodapp/musikwunschbox/tree/main/uploads) gehen, **Add file → Upload files** auswählen und `twitch-musik-client-v0.7.10-zuschaueransicht-neuer-tab.zip` hochladen. Nach dem Commit startet GitHub Actions automatisch und erzeugt ein Release unter [Releases](https://github.com/twitchmodapp/musikwunschbox/releases).
+
+Bis dieser Upload erfolgreich abgeschlossen ist, ist die öffentlich bereitstehende Quellcode-Version weiterhin 0.6.8. Die aktuelle ZIP-Datei ist noch nicht als Release verfügbar.
+
 ## Veröffentlichung
 
 Der Quellcode im Repository muss auf die installierte Version **0.7.10** aktualisiert werden. Danach kann unter **GitHub Actions → WordPress-Plugin veröffentlichen → Run workflow** mit der Eingabe `0.7.10` ein ZIP und ein GitHub-Release erzeugt werden. Die Aktion prüft vor der Veröffentlichung die Plugin-Version, PHP-Syntax und ZIP-Integrität.
