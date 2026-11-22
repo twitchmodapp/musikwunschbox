@@ -2,9 +2,9 @@
 
 Musikwünsche über den Twitch-Chat und über Kanalpunkte sammeln, verwalten und als öffentliche Warteschlange auf einer eigenen WordPress-Website anzeigen.
 
-**Status: Vorbereitung der ersten öffentlichen Version. Noch kein freigegebenes Release.**
+**Status: GitHub-Repository öffentlich. Die dortige Plugin-Version ist noch 0.6.8; die auf Kampfi/Blindi eingesetzte Version 0.7.10 muss vor dem ersten Release noch mit dem Repository synchronisiert werden.**
 
-## Funktionen des bisherigen WordPress-Clients
+## Funktionen der Musikwunschbox
 
 - Musikwünsche aus Chat und Kanalpunktebelohnungen entgegennehmen
 - Warteschlange mit Songtitel, Interpret und Cover anzeigen
@@ -12,7 +12,8 @@ Musikwünsche über den Twitch-Chat und über Kanalpunkte sammeln, verwalten und
 - Liste mit einem Schalter aktivieren oder deaktivieren
 - Hinweis bei deaktivierter Liste optional an den Twitch-Chat senden
 - Zuschaueransicht mit Status der Liste
-- Automatische vollständige Bereinigung der Liste nach zwölf Stunden
+- Automatische Bereinigung nach zwölf Stunden oder dauerhafte Aufbewahrung (ab 0.6.9)
+- In Version 0.7.10: Screenreader-Verbesserungen, 20-Sekunden-Aktualisierung, Zuschaueransicht über das Administrationsmenü in einem neuen Tab
 
 Die Verfügbarkeit einzelner Funktionen hängt von der Verbindung zur zentralen Twitch-Anwendung, den Twitch-Berechtigungen und den Einstellungen des Streamers ab.
 
@@ -25,7 +26,7 @@ Die Verfügbarkeit einzelner Funktionen hängt von der Verbindung zur zentralen 
 
 **Wichtig:** Das Client-Plugin ist nicht vollständig eigenständig. Es verwendet den zentralen Twitch-Dienst des Projekts. Die Nutzung mit fremden Twitch- und WordPress-Konten ist noch nicht für die öffentliche Freigabe geprüft.
 
-## Installation (nach Freigabe)
+## Installation (nach Freigabe von Version 0.7.10)
 
 1. Die **ZIP-Datei eines offiziellen GitHub-Releases** herunterladen; nicht den Button „Code > Download ZIP“ verwenden.
 2. In WordPress **Plugins > Installieren > Plugin hochladen** auswählen.
@@ -41,7 +42,9 @@ Das WordPress-Plugin steht unter der **GNU General Public License, Version 2 ode
 
 ## Veröffentlichung
 
-Der erste Release-Kandidat basiert auf dem vorhandenen WordPress-Client **0.6.8**. Vor einem öffentlichen Download sind noch ein Funktionstest mit einem unabhängigen Twitch-Konto, die Prüfung des Zentraldienstes und ein Sicherheitsreview erforderlich.
+Der Quellcode im Repository muss auf die installierte Version **0.7.10** aktualisiert werden. Danach kann unter **GitHub Actions → WordPress-Plugin veröffentlichen → Run workflow** mit der Eingabe `0.7.10` ein ZIP und ein GitHub-Release erzeugt werden. Die Aktion prüft vor der Veröffentlichung die Plugin-Version, PHP-Syntax und ZIP-Integrität.
+
+**Die zentrale Node.js-Plattform akzeptiert derzeit nur ausdrücklich zugelassene WordPress-Domains.** Bevor beliebige Webseiten das Plugin nutzen können, muss eine sichere automatische Registrierung umgesetzt und getestet werden. Nicht nur die ZIP-Datei muss öffentlich sein, sondern auch die Anmeldung über die Zentrale für Dritte funktionieren.
 
 **Keine Zugangsdaten in GitHub hochladen:** keine Twitch-Secrets, Access- oder Refresh-Tokens, WordPress-Konfiguration, HMAC-Geheimnisse oder Datenbanken.
 
