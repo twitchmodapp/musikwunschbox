@@ -61,6 +61,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.plugin.outputs.version }}
+          target_commitish: main
           name: Musikwunschbox v${{ steps.plugin.outputs.version }}
           generate_release_notes: true
           files: dist/twitch-musik-client-v${{ steps.plugin.outputs.version }}.zip
