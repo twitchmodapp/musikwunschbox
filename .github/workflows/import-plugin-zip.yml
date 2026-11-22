@@ -1,0 +1,66 @@
+name: Hochgeladenes WordPress-Plugin übernehmen
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'uploads/*.zip'
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Plugin ZIP prüfen und in Quellcode übernehmen
+        id: plugin
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          archives=(uploads/*.zip)
+          if [ "${#archives[@]}" -ne 1 ]; then
+            echo "Bitte genau eine Plugin-ZIP unter uploads/ ablegen" >&2
+            exit 1
+          fi
+          file="${archives[0]}"
+          unzip -t "$file"
+          mkdir -p /tmp/plugin-import
+          unzip -q "$file" -d /tmp/plugin-import
+          test -f /tmp/plugin-import/twitch-musik-client/twitch-musik-client.php
+          VERSION=$(sed -n -E 's/^ *\* Version: ([0-9.]+).*$/\1/p' /tmp/plugin-import/twitch-musik-client/twitch-musik-client.php | head -1)
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Keine gültige Plugin-Version gefunden" >&2
+            exit 1
+          fi
+          for file in /tmp/plugin-import/twitch-musik-client/*; do
+            case "$file" in
+              *.php|*.js|*.css) ;;
+              *) echo "Unerwartete Datei im Plugin: $file" >&2; exit 1 ;;
+            esac
+          done
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq php-cli
+          php -l /tmp/plugin-import/twitch-musik-client/twitch-musik-client.php
+          rm -rf twitch-musik-client
+          cp -a /tmp/plugin-import/twitch-musik-client .
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Quellcode aktualisieren
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add twitch-musik-client
+          git diff --cached --quiet || (git commit -m "Publish WordPress plugin v${{ steps.plugin.outputs.version }}" && git push)
+      - name: Installationspaket bereitstellen
+        run: |
+          mkdir -p dist
+          zip -r -q "dist/twitch-musik-client-v${{ steps.plugin.outputs.version }}.zip" twitch-musik-client
+          unzip -t "dist/twitch-musik-client-v${{ steps.plugin.outputs.version }}.zip"
+      - name: GitHub Release erstellen
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.plugin.outputs.version }}
+          name: Musikwunschbox v${{ steps.plugin.outputs.version }}
+          generate_release_notes: true
+          files: dist/twitch-musik-client-v${{ steps.plugin.outputs.version }}.zip
