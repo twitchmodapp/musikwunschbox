@@ -2,7 +2,7 @@
 
 Musikwünsche über den Twitch-Chat und über Kanalpunkte sammeln, verwalten und als öffentliche Warteschlange auf einer eigenen WordPress-Website anzeigen.
 
-**Status: Quellcode auf Version 0.7.11 synchronisiert. Die Veröffentlichung als installierbares Release erfolgt separat.**
+**Status: Quellcode auf Version 0.7.11 synchronisiert. Es wird keine installierbare ZIP-Datei und kein GitHub-Release bereitgestellt.**
 
 ## Funktionen der Musikwunschbox
 
@@ -26,27 +26,19 @@ Die Verfügbarkeit einzelner Funktionen hängt von der Verbindung zur zentralen 
 
 **Wichtig:** Das Client-Plugin ist nicht vollständig eigenständig. Es verwendet den zentralen Twitch-Dienst des Projekts. Die Nutzung mit fremden Twitch- und WordPress-Konten ist noch nicht für die öffentliche Freigabe geprüft.
 
-## Installation (nach Freigabe von Version 0.7.11)
+## Nutzung
 
-1. Die **ZIP-Datei eines offiziellen GitHub-Releases** herunterladen; nicht den Button „Code > Download ZIP“ verwenden.
-2. In WordPress **Plugins > Installieren > Plugin hochladen** auswählen.
-3. ZIP installieren und Plugin aktivieren.
-4. Unter **Twitch Musikwünsche** die Verbindung einrichten und das Twitch-Konto autorisieren.
-5. Für die Zuschaueransicht den Shortcode `[twitch_musikwuensche]` auf einer WordPress-Seite einfügen.
-
-Die Anleitung wird vor Veröffentlichung anhand einer frischen WordPress-Installation überprüft.
+Dieses Repository dient der öffentlichen Dokumentation des Quellcodes. Es wird kein installierbares Plugin-Paket angeboten. Die betriebenen Installationen werden separat verwaltet.
 
 ## Lizenz
 
 Das WordPress-Plugin steht unter der **GNU General Public License, Version 2 oder jeder späteren Version (GPL-2.0-or-later)**. Der vollständige Lizenztext ist in [`LICENSE`](LICENSE) enthalten. Die Plugin-Metadaten und die `readme.txt` nennen dieselbe Lizenz.
 
-## Veröffentlichung
-
-Unter GitHub Actions → WordPress-Plugin veröffentlichen → Run workflow mit Version `0.7.11` können ZIP und Release erstellt werden. Die Aktion prüft Plugin-Version, PHP-Syntax und ZIP-Integrität.
+## Versionshinweise
 
 Version 0.7.11 erhält die Scrollposition bei Verwaltungsaktionen und verbessert die Wiederherstellung des Tastaturfokus.
 
-**Die zentrale Node.js-Plattform akzeptiert derzeit nur ausdrücklich zugelassene WordPress-Domains.** Bevor beliebige Webseiten das Plugin nutzen können, muss eine sichere automatische Registrierung umgesetzt und getestet werden. Nicht nur die ZIP-Datei muss öffentlich sein, sondern auch die Anmeldung über die Zentrale für Dritte funktionieren.
+**Die zentrale Node.js-Plattform akzeptiert derzeit nur ausdrücklich zugelassene WordPress-Domains.** Bevor beliebige Webseiten das Plugin nutzen können, muss eine sichere automatische Registrierung umgesetzt und getestet werden. Eine öffentliche Nutzung ist derzeit nicht freigegeben.
 
 **Keine Zugangsdaten in GitHub hochladen:** keine Twitch-Secrets, Access- oder Refresh-Tokens, WordPress-Konfiguration, HMAC-Geheimnisse oder Datenbanken.
 
