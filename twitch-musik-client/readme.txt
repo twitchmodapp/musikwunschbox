@@ -2,7 +2,7 @@
 Contributors: twitchmodapp
 Tags: twitch, musikwunsch, musik, kanalpunkte, livestream
 Requires PHP: 8.0
-Stable tag: 0.6.8
+Stable tag: 0.7.11
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -31,7 +31,8 @@ Funktionen. Es funktioniert nicht als vollständig unabhängiger Twitch-Bot.
 * Gespielt/Ablehnen und manuelles Leeren
 * Aktivieren/Deaktivieren und Hinweis im Chat
 * Öffentliche Liste mit Statusanzeige
-* Automatische vollständige Leerung im 12-Stunden-Zyklus
+* Wahlweise vollständige Leerung im 12-Stunden-Zyklus oder dauerhafte Aufbewahrung
+* Administrationsansicht mit Darkmode und automatischer Aktualisierung alle 20 Sekunden
 
 == Datenschutz und Betrieb ==
 Das Plugin stellt eine öffentliche Liste mit Twitch-Nutzernamen und
@@ -40,6 +41,14 @@ Twitch und einer externen Musiksuche. Betreiber müssen ihre Datenschutzhinweise
 und die Berechtigung der Twitch-App selbst prüfen.
 
 == Changelog ==
+= 0.7.11 =
+* Scrollposition nach Verwaltungsaktionen wiederherstellen.
+* Tastaturfokus nach Möglichkeit wiederherstellen.
+* Scrollposition bei automatischer Aktualisierung berücksichtigen.
+
+= 0.7.10 =
+* Screenreader-Verbesserungen, automatische Aktualisierung und Zuschaueransicht im neuen Tab.
+
 = 0.6.8 =
 * Zuschauerstatus in der öffentlichen Ansicht. Originaler Plugin-Code,
   ergänzt um Installations- und Nutzungshinweise für die Distribution.

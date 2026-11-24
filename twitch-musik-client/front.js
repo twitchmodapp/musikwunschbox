@@ -8,15 +8,23 @@
    return response.json();
   }).then(function(rows){
    if(!Array.isArray(rows))throw new Error('Ungültige API-Antwort');
+   const signature=JSON.stringify(rows);
+   if(el.dataset.tmcLastRows === signature)return;
+   const focused=el.contains(document.activeElement);
+   const selection=window.getSelection();
+   const reading=selection && !selection.isCollapsed && el.contains(selection.anchorNode);
+   if(focused || reading){el.dataset.tmcPendingRows=signature;return;}
    el.replaceChildren();
+   el.dataset.tmcLastRows=signature;
    const current=rows.filter(s=>s.status==='waiting'||s.status==='playing');
    const played=rows.filter(s=>s.status==='played');
    function section(heading,items,empty){
     const block=document.createElement('section');block.className='tmc-section';
     const h=document.createElement('h3');h.textContent=heading;block.append(h);
     if(!items.length){const p=document.createElement('p');p.textContent=empty;block.append(p);}
+    const list=document.createElement('div');list.className='tmc-items';list.setAttribute('role','list');block.append(list);
     items.forEach(function(s,index){
-    const item=document.createElement('div');item.className='tmc-item';
+    const item=document.createElement('div');item.className='tmc-item';item.setAttribute('role','listitem');
     const cover=document.createElement('div');cover.className='tmc-cover';
     if(s.cover_url){const img=document.createElement('img');img.src=s.cover_url;img.alt='Cover zu '+(s.artist||'')+' – '+(s.title||'');img.loading='lazy';img.referrerPolicy='no-referrer';img.onerror=function(){cover.replaceChildren('♫');cover.classList.add('tmc-placeholder');};cover.append(img);}
     else {cover.textContent='♫';cover.classList.add('tmc-placeholder');}
@@ -26,12 +34,12 @@
     const user=document.createElement('small');user.className='tmc-user';user.textContent='Gewünscht von '+(s.username||'Unbekannt');
     const badge=document.createElement('span');badge.className='tmc-status '+(s.status==='playing'?'tmc-playing':'tmc-waiting');badge.textContent=s.status==='played'?'✓ Gespielt':(s.status==='playing'?'Wird gespielt':'Wartet');if(s.status==='played')badge.classList.add('tmc-played');
     const number=document.createElement('span');number.className='tmc-number';number.textContent=(index+1)+'.';
-    detail.append(title,artist,user,badge);item.append(number,cover,detail);block.append(item);
+    detail.append(title,artist,user,badge);item.append(number,cover,detail);list.append(item);
     });el.append(block);}
    section('Aktuelle Musikwünsche',current,'Aktuell sind keine Musikwünsche offen.');
-   section('Gespielte Musikwünsche',played,'In den letzten 12 Stunden wurde noch kein Titel als gespielt markiert.');
+   section('Gespielte Musikwünsche',played,'Es wurden noch keine Titel als gespielt markiert.');
   }).catch(function(error){
-   el.textContent='Musikwünsche konnten nicht geladen werden. Bitte Seite später erneut laden.';
+   if(!el.dataset.tmcLastRows)el.textContent='Musikwünsche konnten nicht geladen werden. Bitte Seite später erneut laden.';
    console.error('Twitch Musik Wunschliste:',error);
   });
  }

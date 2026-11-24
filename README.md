@@ -2,7 +2,7 @@
 
 Musikwünsche über den Twitch-Chat und über Kanalpunkte sammeln, verwalten und als öffentliche Warteschlange auf einer eigenen WordPress-Website anzeigen.
 
-**Status: GitHub-Repository öffentlich. Die dortige Plugin-Version ist noch 0.6.8; die auf Kampfi/Blindi eingesetzte Version 0.7.10 muss vor dem ersten Release noch mit dem Repository synchronisiert werden.**
+**Status: Quellcode auf Version 0.7.11 synchronisiert. Die Veröffentlichung als installierbares Release erfolgt separat.**
 
 ## Funktionen der Musikwunschbox
 
@@ -26,7 +26,7 @@ Die Verfügbarkeit einzelner Funktionen hängt von der Verbindung zur zentralen 
 
 **Wichtig:** Das Client-Plugin ist nicht vollständig eigenständig. Es verwendet den zentralen Twitch-Dienst des Projekts. Die Nutzung mit fremden Twitch- und WordPress-Konten ist noch nicht für die öffentliche Freigabe geprüft.
 
-## Installation (nach Freigabe von Version 0.7.10)
+## Installation (nach Freigabe von Version 0.7.11)
 
 1. Die **ZIP-Datei eines offiziellen GitHub-Releases** herunterladen; nicht den Button „Code > Download ZIP“ verwenden.
 2. In WordPress **Plugins > Installieren > Plugin hochladen** auswählen.
@@ -40,15 +40,11 @@ Die Anleitung wird vor Veröffentlichung anhand einer frischen WordPress-Install
 
 Das WordPress-Plugin steht unter der **GNU General Public License, Version 2 oder jeder späteren Version (GPL-2.0-or-later)**. Der vollständige Lizenztext ist in [`LICENSE`](LICENSE) enthalten. Die Plugin-Metadaten und die `readme.txt` nennen dieselbe Lizenz.
 
-## Veröffentlichung der aktuellen Version 0.7.10
-
-Die vorbereitete GitHub-Aktion **Hochgeladenes WordPress-Plugin übernehmen** übernimmt Quellcode und Release aus einer installierbaren ZIP. Dazu auf [uploads](https://github.com/twitchmodapp/musikwunschbox/tree/main/uploads) gehen, **Add file → Upload files** auswählen und `twitch-musik-client-v0.7.10-zuschaueransicht-neuer-tab.zip` hochladen. Nach dem Commit startet GitHub Actions automatisch und erzeugt ein Release unter [Releases](https://github.com/twitchmodapp/musikwunschbox/releases).
-
-Bis dieser Upload erfolgreich abgeschlossen ist, ist die öffentlich bereitstehende Quellcode-Version weiterhin 0.6.8. Die aktuelle ZIP-Datei ist noch nicht als Release verfügbar.
-
 ## Veröffentlichung
 
-Der Quellcode im Repository muss auf die installierte Version **0.7.10** aktualisiert werden. Danach kann unter **GitHub Actions → WordPress-Plugin veröffentlichen → Run workflow** mit der Eingabe `0.7.10` ein ZIP und ein GitHub-Release erzeugt werden. Die Aktion prüft vor der Veröffentlichung die Plugin-Version, PHP-Syntax und ZIP-Integrität.
+Unter GitHub Actions → WordPress-Plugin veröffentlichen → Run workflow mit Version `0.7.11` können ZIP und Release erstellt werden. Die Aktion prüft Plugin-Version, PHP-Syntax und ZIP-Integrität.
+
+Version 0.7.11 erhält die Scrollposition bei Verwaltungsaktionen und verbessert die Wiederherstellung des Tastaturfokus.
 
 **Die zentrale Node.js-Plattform akzeptiert derzeit nur ausdrücklich zugelassene WordPress-Domains.** Bevor beliebige Webseiten das Plugin nutzen können, muss eine sichere automatische Registrierung umgesetzt und getestet werden. Nicht nur die ZIP-Datei muss öffentlich sein, sondern auch die Anmeldung über die Zentrale für Dritte funktionieren.
 

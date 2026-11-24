@@ -3,3 +3,5 @@
 .tmc-section{display:grid;gap:12px}.tmc-section h3{margin:10px 0 2px}.tmc-played{background:#d8efe0;color:#185c33}.tmc-section p{margin:0 0 8px}
 
 .tmc-public{display:grid;gap:16px}.tmc-public-state{padding:14px 18px;border-radius:10px;border:2px solid #8892a0;font-weight:700;background:#edf0f4;color:#202a35}.tmc-public-state.tmc-public-open{background:#d6f5df;color:#12582a;border-color:#16803c}.tmc-public-state.tmc-public-closed{background:#ffe0e0;color:#87151b;border-color:#bd232b}
+
+.tmc-items{display:grid;gap:12px}.tmc-item{min-width:0}.tmc-item *{overflow-wrap:anywhere}.tmc-public-state:focus-visible{outline:3px solid #9146ff;outline-offset:2px}
