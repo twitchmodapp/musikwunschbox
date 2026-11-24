@@ -17,13 +17,9 @@ WICHTIG: Das Plugin benötigt den separat betriebenen Twitch-Musik-Zentraldienst
 unter https://musikwunsch.it-md-server.de/ mit aktiven OAuth- und EventSub-
 Funktionen. Es funktioniert nicht als vollständig unabhängiger Twitch-Bot.
 
-== Installation ==
-1. ZIP-Datei in WordPress unter Plugins > Installieren > Plugin hochladen wählen.
-2. Plugin aktivieren (PHP mindestens 8.0 erforderlich).
-3. Im WordPress-Adminmenü „Twitch Musikwünsche“ öffnen.
-4. Verbindung zur Zentrale herstellen und Twitch-Freigaben prüfen.
-5. Shortcode [twitch_musikwuensche] in eine WordPress-Seite einfügen.
-6. Chatbefehl, Kanalpunkte-Belohnung und Einstellungen im Plugin verwalten.
+== Nutzung ==
+Dieses Repository stellt den Quellcode bereit, jedoch keine installierbare ZIP-Datei.
+Die Nutzung mit dem Zentraldienst ist derzeit auf zugelassene Installationen begrenzt.
 
 == Funktionen ==
 * Musikwünsche über Chat und Twitch-Kanalpunkte
