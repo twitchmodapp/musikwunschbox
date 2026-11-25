@@ -25,7 +25,8 @@ jobs:
           node --check twitch-musik-client/admin.js
           node --check twitch-musik-client/front.js
 
-      - name: Plugin-Struktur prüfen
+      - name: Plugin-Struktur und Version prüfen
+        id: plugin
         run: |
           set -eu
           test -s twitch-musik-client/twitch-musik-client.php
@@ -33,19 +34,29 @@ jobs:
           test -s twitch-musik-client/front.js
           test -s twitch-musik-client/front.css
           test -s twitch-musik-client/readme.txt
-          grep -Fq 'Version: 0.6.8' twitch-musik-client/twitch-musik-client.php
+          VERSION=$(sed -nE 's/^[[:space:]]*\*[[:space:]]*Version:[[:space:]]*([0-9]+\.[0-9]+\.[0-9]+)[[:space:]]*$/\1/p' twitch-musik-client/twitch-musik-client.php)
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          STABLE=$(sed -nE 's/^Stable tag:[[:space:]]*([0-9]+\.[0-9]+\.[0-9]+)[[:space:]]*$/\1/p' twitch-musik-client/readme.txt)
+          test "$VERSION" = "$STABLE"
+          test -s LICENSE
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Installierbare WordPress-ZIP erstellen
         run: |
           set -eu
           mkdir -p dist
-          zip -q -r dist/twitch-musik-client-0.6.8.zip twitch-musik-client
-          unzip -t dist/twitch-musik-client-0.6.8.zip
+          VERSION="${{ steps.plugin.outputs.version }}"
+          STAGE=$(mktemp -d)
+          trap 'rm -rf "$STAGE"' EXIT
+          cp -a twitch-musik-client "$STAGE/"
+          cp LICENSE "$STAGE/twitch-musik-client/LICENSE"
+          (cd "$STAGE" && zip -q -r "$GITHUB_WORKSPACE/dist/twitch-musik-client-v$VERSION.zip" twitch-musik-client)
+          unzip -t "dist/twitch-musik-client-v$VERSION.zip"
 
       - name: ZIP als Build-Artefakt bereitstellen
         uses: actions/upload-artifact@v4
         with:
-          name: twitch-musik-client-0.6.8
-          path: dist/twitch-musik-client-0.6.8.zip
+          name: twitch-musik-client-v${{ steps.plugin.outputs.version }}
+          path: dist/twitch-musik-client-v${{ steps.plugin.outputs.version }}.zip
           if-no-files-found: error
           retention-days: 30
