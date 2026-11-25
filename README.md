@@ -2,7 +2,7 @@
 
 Musikwünsche über den Twitch-Chat und über Kanalpunkte sammeln, verwalten und als öffentliche Warteschlange auf einer eigenen WordPress-Website anzeigen.
 
-**Status: Version 0.7.11. Öffentliche Registrierung noch nicht freigegeben. Eine installierbare ZIP-Datei ist zur separaten Bereitstellung durch den Betreiber vorgesehen.**
+**Status: Version 0.7.12 – öffentliche Beta vorbereitet. Externe Registrierung erfordert serverseitige Freischaltung. Eine installierbare ZIP-Datei ist zur separaten Bereitstellung durch den Betreiber vorgesehen.**
 
 ## Funktionen der Musikwunschbox
 
@@ -36,9 +36,9 @@ Das WordPress-Plugin steht unter der **GNU General Public License, Version 2 ode
 
 ## Versionshinweise
 
-Version 0.7.11 erhält die Scrollposition bei Verwaltungsaktionen und verbessert die Wiederherstellung des Tastaturfokus.
+Version 0.7.12 kennzeichnet die öffentliche Beta; die Client-Funktionen bleiben unverändert. Version 0.7.11 erhält die Scrollposition bei Verwaltungsaktionen und verbessert die Wiederherstellung des Tastaturfokus.
 
-**Die automatische Registrierung ist zentral implementiert, bleibt aber bis zum vollständigen externen Praxistest deaktiviert.** Die zentrale Plattform prüft HTTPS, öffentliche IPv4-Ziele und den Besitz des installationsspezifischen Schlüssels. IPv6-only-Webseiten und WordPress in Unterverzeichnissen werden derzeit nicht unterstützt. Ein Twitch-Affiliate- oder Partnerstatus ist für Kanalpunkte erforderlich; Chatwünsche sind davon unabhängig. Die bestehenden zugelassenen Installationen bleiben nutzbar.
+**Die automatische Registrierung ist zentral implementiert. Für die öffentliche Beta muss der Betreiber sie serverseitig aktivieren. Der vollständige externe Praxistest steht noch aus.** Die zentrale Plattform prüft HTTPS, öffentliche IPv4-Ziele und den Besitz des installationsspezifischen Schlüssels. IPv6-only-Webseiten und WordPress in Unterverzeichnissen werden derzeit nicht unterstützt. Ein Twitch-Affiliate- oder Partnerstatus ist für Kanalpunkte erforderlich; Chatwünsche sind davon unabhängig. Die bestehenden zugelassenen Installationen bleiben nutzbar.
 
 **Keine Zugangsdaten in GitHub hochladen:** keine Twitch-Secrets, Access- oder Refresh-Tokens, WordPress-Konfiguration, HMAC-Geheimnisse oder Datenbanken.
 

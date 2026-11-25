@@ -2,7 +2,7 @@
 Contributors: twitchmodapp
 Tags: twitch, musikwunsch, musik, kanalpunkte, livestream
 Requires PHP: 8.0
-Stable tag: 0.7.11
+Stable tag: 0.7.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -18,8 +18,9 @@ unter https://musikwunsch.it-md-server.de/ mit aktiven OAuth- und EventSub-
 Funktionen. Es funktioniert nicht als vollständig unabhängiger Twitch-Bot.
 
 == Nutzung ==
-Dieses Repository stellt den Quellcode bereit, jedoch keine installierbare ZIP-Datei.
-Die Nutzung mit dem Zentraldienst ist derzeit auf zugelassene Installationen begrenzt.
+Das ZIP-Paket wird separat vom Betreiber bereitgestellt. Die Version 0.7.12 ist für die öffentliche Beta vorgesehen. Externe Registrierungen sind erst nach serverseitiger Freischaltung möglich.
+Voraussetzungen: HTTPS, öffentlich erreichbare IPv4-Adresse und WordPress im Stammverzeichnis einer Domain. Für Kanalpunkte ist Twitch-Affiliate- oder Partnerstatus erforderlich.
+Installation: In WordPress unter Plugins > Neues Plugin > Plugin hochladen das ZIP-Paket auswählen, installieren, aktivieren und im Plugin mit Twitch verbinden.
 
 == Funktionen ==
 * Musikwünsche über Chat und Twitch-Kanalpunkte
@@ -37,6 +38,11 @@ Twitch und einer externen Musiksuche. Betreiber müssen ihre Datenschutzhinweise
 und die Berechtigung der Twitch-App selbst prüfen.
 
 == Changelog ==
+= 0.7.12 =
+* Vorbereitung der öffentlichen Beta mit automatischer Domain-Zulassung durch den Zentraldienst.
+* Aktualisierte Installationshinweise und Versionskennzeichnung; Client-Funktionen unverändert.
+* Vollständiger externer Praxistest steht noch aus.
+
 = 0.7.11 =
 * Scrollposition nach Verwaltungsaktionen wiederherstellen.
 * Tastaturfokus nach Möglichkeit wiederherstellen.
