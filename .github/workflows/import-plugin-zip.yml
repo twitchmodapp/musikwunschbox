@@ -4,6 +4,8 @@ on:
     branches: [main]
     paths:
       - 'uploads/*.zip'
+      - '.github/workflows/import-plugin-zip.yml'
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
@@ -26,6 +28,20 @@ jobs:
           fi
           file="${archives[0]}"
           unzip -t "$file"
+          python3 - "$file" <<'PY'
+          import sys, zipfile, stat
+          allowed = {"twitch-musik-client/" + n for n in ("twitch-musik-client.php", "admin.js", "front.js", "front.css", "readme.txt", "LICENSE")}
+          with zipfile.ZipFile(sys.argv[1]) as z:
+              seen = set()
+              for i in z.infolist():
+                  if i.filename == "twitch-musik-client/" and i.is_dir():
+                      continue
+                  if i.filename not in allowed or i.filename in seen or i.is_dir() or stat.S_ISLNK(i.external_attr >> 16):
+                      raise SystemExit("Unexpected ZIP entry: " + i.filename)
+                  seen.add(i.filename)
+              if seen != allowed:
+                  raise SystemExit("Missing required plugin files")
+          PY
           mkdir -p /tmp/plugin-import
           unzip -q "$file" -d /tmp/plugin-import
           test -f /tmp/plugin-import/twitch-musik-client/twitch-musik-client.php
@@ -35,14 +51,18 @@ jobs:
             exit 1
           fi
           for file in /tmp/plugin-import/twitch-musik-client/*; do
-            case "$file" in
-              *.php|*.js|*.css) ;;
+            case "$(basename "$file")" in
+              twitch-musik-client.php|admin.js|front.js|front.css|readme.txt|LICENSE) ;;
               *) echo "Unerwartete Datei im Plugin: $file" >&2; exit 1 ;;
             esac
           done
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq php-cli
+          test -s /tmp/plugin-import/twitch-musik-client/readme.txt
+          test -s /tmp/plugin-import/twitch-musik-client/LICENSE
+          STABLE=$(sed -nE 's/^Stable tag:[[:space:]]*([0-9]+\.[0-9]+\.[0-9]+)[[:space:]]*$/\1/p' /tmp/plugin-import/twitch-musik-client/readme.txt)
+          test "$VERSION" = "$STABLE"
           php -l /tmp/plugin-import/twitch-musik-client/twitch-musik-client.php
+          node --check /tmp/plugin-import/twitch-musik-client/admin.js
+          node --check /tmp/plugin-import/twitch-musik-client/front.js
           rm -rf twitch-musik-client
           cp -a /tmp/plugin-import/twitch-musik-client .
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
